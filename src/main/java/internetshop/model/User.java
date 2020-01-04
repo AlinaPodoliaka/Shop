@@ -17,22 +17,27 @@ public class User {
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public Long getId() {
+
         return id;
     }
 
     public List<Order> getOrders() {
+
         return orders;
     }
 
     public void setOrders(List<Order> orders) {
+
         this.orders = orders;
     }
 }

@@ -1,7 +1,6 @@
 package internetshop.dao;
 
 import internetshop.model.Item;
-
 import java.util.Optional;
 
 public interface ItemDao {

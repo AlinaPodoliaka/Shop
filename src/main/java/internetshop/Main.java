@@ -50,6 +50,5 @@ public class Main {
 
         List<Order> ordersForUserTest = orderService.getUserOrders(userTest);
         System.out.println(ordersForUserTest);
-
     }
 }

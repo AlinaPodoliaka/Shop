@@ -18,4 +18,5 @@ public interface ItemService {
     void delete(Item item);
 
     List<Item> getAllItems();
+
 }

@@ -35,6 +35,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> update(Order order) {
+
         return orderDao.update(order);
     }
 
@@ -46,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order completeOrder(List<Item> items, User user) {
+
         Order order = new Order(items, user.getId());
         orderDao.create(order);
         userDao.get(user.getId()).get().getOrders().add(order);
@@ -54,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUserOrders(User user) {
+
         return Storage.orders
                 .stream()
                 .filter(o -> o.getUserId().equals(user.getId()))

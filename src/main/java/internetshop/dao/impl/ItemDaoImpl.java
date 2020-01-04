@@ -10,14 +10,17 @@ import java.util.Optional;
 
 @Dao
 public class ItemDaoImpl implements ItemDao {
+
     @Override
     public Item create(Item item) {
+
         Storage.items.add(item);
         return item;
     }
 
     @Override
     public Optional<Item> get(Long id) {
+
         return Optional.ofNullable(Storage.items
                 .stream()
                 .filter(item -> item.getId() == (id))
@@ -27,6 +30,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Optional<Item> update(Item item) {
+
         Optional<Item> updateItem = get(item.getId());
         updateItem.get().setName(item.getName());
         updateItem.get().setPrice(item.getPrice());
@@ -42,6 +46,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public void delete(Item item) {
+
         Storage.items.removeIf(i -> i.equals(item));
     }
 }

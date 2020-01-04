@@ -10,8 +10,10 @@ import java.util.Optional;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
+
     @Override
     public Order create(Order order) {
+
         Storage.orders.add(order);
         return order;
     }
@@ -28,6 +30,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Optional<Order> update(Order order) {
+
         Optional<Order> updateOrder = get(order.getId());
         updateOrder.get().setItems(order.getItems());
         return updateOrder;
@@ -35,6 +38,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void delete(Long id) {
+
         Storage.orders.removeIf(o -> o.getId().equals(id));
     }
 }
