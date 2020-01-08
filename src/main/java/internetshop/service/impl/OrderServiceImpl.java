@@ -49,8 +49,9 @@ public class OrderServiceImpl implements OrderService {
     public Order completeOrder(List<Item> items, User user) {
 
         Order order = new Order(items, user.getId());
+        order.setItems(items);
         orderDao.create(order);
-        userDao.get(user.getId()).get().getOrders().add(order);
+
         return order;
     }
 

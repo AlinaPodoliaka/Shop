@@ -5,7 +5,6 @@ import internetshop.dao.Storage;
 import internetshop.lib.Dao;
 import internetshop.model.Bucket;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Dao
@@ -20,12 +19,10 @@ public class BucketDaoImpl implements BucketDao {
     @Override
     public Optional<Bucket> get(Long id) {
 
-        return Optional.ofNullable(Storage.buckets
+        return Storage.buckets
                 .stream()
                 .filter(b -> b.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() ->
-                        new NoSuchElementException("Can't find bucket with id " + id)));
+                .findFirst();
     }
 
     @Override

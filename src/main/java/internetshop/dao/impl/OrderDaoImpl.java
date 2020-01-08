@@ -5,7 +5,6 @@ import internetshop.dao.Storage;
 import internetshop.lib.Dao;
 import internetshop.model.Order;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Dao
@@ -21,11 +20,10 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Optional<Order> get(Long id) {
 
-        return Optional.ofNullable(Storage.orders
+        return Storage.orders
                 .stream()
                 .filter(order -> order.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can't find order with id " + id)));
+                .findFirst();
     }
 
     @Override

@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> update(User user) {
 
         Optional<User> updateUser = get(user.getId());
-        updateUser.get().setOrders(user.getOrders());
+        updateUser.get().setName(user.getName());
 
         return updateUser;
     }

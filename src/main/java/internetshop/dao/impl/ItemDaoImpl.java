@@ -5,7 +5,6 @@ import internetshop.dao.Storage;
 import internetshop.lib.Dao;
 import internetshop.model.Item;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Dao
@@ -21,11 +20,10 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public Optional<Item> get(Long id) {
 
-        return Optional.ofNullable(Storage.items
+        return Storage.items
                 .stream()
                 .filter(item -> item.getId() == (id))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can't find item with id " + id)));
+                .findFirst();
     }
 
     @Override
