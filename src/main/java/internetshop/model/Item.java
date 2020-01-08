@@ -3,7 +3,7 @@ package internetshop.model;
 public class Item {
 
     private static Long idGenerator = 0L;
-    private long id;
+    private Long id;
     private String name;
     private Double price;
 
@@ -13,7 +13,7 @@ public class Item {
         id = idGenerator++;
     }
 
-    public long getId() {
+    public Long getId() {
 
         return id;
     }
