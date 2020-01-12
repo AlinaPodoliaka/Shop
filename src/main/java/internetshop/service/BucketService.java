@@ -8,11 +8,13 @@ import java.util.Optional;
 
 public interface BucketService {
 
-    Optional<Bucket> addItem(Long bucketId, Long itemId);
+    void addItem(Long bucketId, Long itemId);
 
     Bucket create(Bucket bucket);
 
     Optional<Bucket> get(Long id);
+
+    Bucket getByUserId(Long userId);
 
     Optional<Bucket> update(Bucket bucket);
 

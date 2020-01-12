@@ -13,6 +13,10 @@ public class Item {
         id = idGenerator++;
     }
 
+    public Item() {
+        id = idGenerator++;
+    }
+
     public Long getId() {
 
         return id;
