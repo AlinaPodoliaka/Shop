@@ -2,6 +2,7 @@ package internetshop.service;
 
 import internetshop.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -13,4 +14,6 @@ public interface UserService {
     Optional<User> update(User user);
 
     void delete(Long id);
+
+    List<User> getAllUsers();
 }

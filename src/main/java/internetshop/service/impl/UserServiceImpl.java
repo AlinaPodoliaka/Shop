@@ -1,11 +1,13 @@
 package internetshop.service.impl;
 
+import internetshop.dao.Storage;
 import internetshop.dao.UserDao;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.User;
 import internetshop.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,4 +40,8 @@ public class UserServiceImpl implements UserService {
         userDao.delete(id);
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return Storage.users;
+    }
 }

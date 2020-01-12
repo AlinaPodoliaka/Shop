@@ -11,4 +11,71 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getAllItems</servlet-name>
+        <servlet-class>internetshop.controller.GetAllItemsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getAllItems</servlet-name>
+        <url-pattern>/getAllItems</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getAllUsers</servlet-name>
+        <servlet-class>internetshop.controller.GetAllUsersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getAllUsers</servlet-name>
+        <url-pattern>/getAllUsers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <servlet-class>internetshop.controller.DeleteUserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>registration</servlet-name>
+        <servlet-class>internetshop.controller.RegistrationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>registration</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addItem</servlet-name>
+        <servlet-class>internetshop.controller.AddItemController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addItem</servlet-name>
+        <url-pattern>/addItem</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>bucket</servlet-name>
+        <servlet-class>internetshop.controller.CreateBucketController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>bucket</servlet-name>
+        <url-pattern>/bucket</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addItemToBucket</servlet-name>
+        <servlet-class>internetshop.controller.AddItemToBucketController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addItemToBucket</servlet-name>
+        <url-pattern>/addItemToBucket</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>internetshop.controller.InjectInitializer</listener-class>
+    </listener>
 </web-app>

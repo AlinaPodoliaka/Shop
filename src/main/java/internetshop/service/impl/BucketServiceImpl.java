@@ -2,6 +2,7 @@ package internetshop.service.impl;
 
 import internetshop.dao.BucketDao;
 import internetshop.dao.ItemDao;
+import internetshop.dao.Storage;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.Bucket;
@@ -19,12 +20,12 @@ public class BucketServiceImpl implements BucketService {
     private static ItemDao itemDao;
 
     @Override
-    public Optional<Bucket> addItem(Long bucketId, Long itemId) {
+    public void addItem(Long bucketId, Long itemId) {
+        Bucket newBucket = bucketDao.get(bucketId).get();
+        Item newItem = itemDao.get(itemId).get();
+        newBucket.getItems().add(newItem);
+        bucketDao.update(newBucket);
 
-        Optional<Bucket> bucket = bucketDao.get(bucketId);
-        Optional<Item> item = itemDao.get(itemId);
-        bucket.get().getItems().add(item.get());
-        return bucketDao.update(bucket.get());
     }
 
     @Override
@@ -37,6 +38,15 @@ public class BucketServiceImpl implements BucketService {
     public Optional<Bucket> get(Long id) {
 
         return bucketDao.get(id);
+    }
+
+    @Override
+    public Bucket getByUserId(Long userId) {
+        return Storage.buckets
+                .stream()
+                .filter(bucket -> bucket.getUserId().equals(userId))
+                .findFirst()
+                .orElse(create(new Bucket(userId)));
     }
 
     @Override
@@ -63,7 +73,6 @@ public class BucketServiceImpl implements BucketService {
     @Override
     public List<Item> getAllItems(Bucket bucket) {
 
-        bucket = bucketDao.get(bucket.getId()).get();
-        return bucket.getItems();
+        return bucketDao.get(bucket.getId()).get().getItems();
     }
 }
