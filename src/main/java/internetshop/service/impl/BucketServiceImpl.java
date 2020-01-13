@@ -10,7 +10,7 @@ import internetshop.model.Item;
 import internetshop.service.BucketService;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class BucketServiceImpl implements BucketService {
@@ -35,9 +35,10 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public Optional<Bucket> get(Long id) {
+    public Bucket get(Long id) {
 
-        return bucketDao.get(id);
+        return bucketDao.get(id)
+                .orElseThrow(() -> new NoSuchElementException("Can't find bucket with id " + id));
     }
 
     @Override
@@ -50,9 +51,10 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public Optional<Bucket> update(Bucket bucket) {
+    public Bucket update(Bucket bucket) {
 
-        return bucketDao.update(bucket);
+        return bucketDao.update(bucket)
+                .orElseThrow(() -> new NoSuchElementException("Can't find bucket"));
     }
 
     @Override

@@ -8,7 +8,7 @@ import internetshop.model.User;
 import internetshop.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,15 +23,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> get(Long id) {
+    public User get(Long id) {
 
-        return userDao.get(id);
+        return userDao.get(id)
+                .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id));
     }
 
     @Override
-    public Optional<User> update(User user) {
+    public User update(User user) {
 
-        return userDao.update(user);
+        return userDao.update(user)
+                .orElseThrow(() -> new NoSuchElementException("Can't find user"));
     }
 
     @Override

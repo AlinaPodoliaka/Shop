@@ -30,15 +30,13 @@ public class CompleteOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User user = userService.get(USER_ID).get();
+        User user = userService.get(USER_ID);
         Bucket bucket = bucketService.getByUserId(USER_ID);
         Order order = orderService.completeOrder(bucket.getItems(), user);
 
         bucketService.clear(bucket);
 
-        orderService.getUserOrders(user);
-
-        List<Item> itemsInOrder = orderService.get(order.getId()).get().getItems();
+        List<Item> itemsInOrder = orderService.get(order.getId()).getItems();
         req.setAttribute("items", itemsInOrder);
         req.setAttribute("order_id", order.getId());
 

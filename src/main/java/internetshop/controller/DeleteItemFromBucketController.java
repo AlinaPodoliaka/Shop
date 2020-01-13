@@ -29,7 +29,7 @@ public class DeleteItemFromBucketController extends HttpServlet {
         Bucket bucket = bucketService.getByUserId(USER_ID);
 
         String itemId = req.getParameter("item_id");
-        Item item = itemService.get(Long.valueOf(itemId)).get();
+        Item item = itemService.get(Long.valueOf(itemId));
 
         bucketService.deleteItem(bucket, item);
 

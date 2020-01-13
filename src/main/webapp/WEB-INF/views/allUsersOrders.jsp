@@ -6,6 +6,7 @@
     <title>All Users Orders</title>
 </head>
 <body>
+All orders:
 <table border="1">
     <c:forEach var="order" items="${orders}">
         <tr>

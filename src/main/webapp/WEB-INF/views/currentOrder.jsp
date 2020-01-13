@@ -6,10 +6,11 @@
 <head>
     <title>Your Current Order</title>
 </head>
+<body>
 <br>
 <table border="1">
     <tr>
-        <td>Order # ${order_id}</td>
+        <td>Order #: ${order_id}</td>
     </tr>
     <c:forEach var="item" items="${items}">
         <tr>
@@ -20,7 +21,7 @@
                 <c:out value="${item.name}"/>
             </td>
             <td>
-                <c:out value="${item.price}"/>
+                    <c:out value="${item.price}"/>
         </tr>
     </c:forEach>
 </table>

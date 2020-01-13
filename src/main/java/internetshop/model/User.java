@@ -8,7 +8,6 @@ public class User {
     private String login;
     private String password;
     private Long id;
-    private Bucket userBucket;
 
     public User(String name) {
         this.name = name;
@@ -62,11 +61,4 @@ public class User {
         this.password = password;
     }
 
-    public Bucket getUserBucket(Long id) {
-        return userBucket;
-    }
-
-    public void setUserBucket(Bucket userBucket) {
-        this.userBucket = userBucket;
-    }
 }

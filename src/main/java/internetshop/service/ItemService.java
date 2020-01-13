@@ -3,15 +3,14 @@ package internetshop.service;
 import internetshop.model.Item;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ItemService {
 
     Item create(Item item);
 
-    Optional<Item> get(Long id);
+    Item get(Long id);
 
-    Optional<Item> update(Item item);
+    Item update(Item item);
 
     void delete(Long id);
 

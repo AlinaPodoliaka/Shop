@@ -4,7 +4,6 @@ import internetshop.model.Bucket;
 import internetshop.model.Item;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BucketService {
 
@@ -12,11 +11,11 @@ public interface BucketService {
 
     Bucket create(Bucket bucket);
 
-    Optional<Bucket> get(Long id);
+    Bucket get(Long id);
 
     Bucket getByUserId(Long userId);
 
-    Optional<Bucket> update(Bucket bucket);
+    Bucket update(Bucket bucket);
 
     void deleteItem(Bucket bucket, Item item);
 
