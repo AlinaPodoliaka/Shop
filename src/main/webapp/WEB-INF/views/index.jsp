@@ -21,5 +21,8 @@
 <br>
 <a href="/Internet_Shop_war_exploded/bucket">Bucket</a>
 </br>
+<br>
+<a href="/Internet_Shop_war_exploded/allUsersOrders">All Users Orders</a>
+</br>
 </body>
 </html>

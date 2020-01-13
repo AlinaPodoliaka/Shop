@@ -11,6 +11,7 @@ Items in Your Bucket:
         <th>Id</th>
         <th>Name</th>
         <th>Price</th>
+        <th>Delete</th>
     </tr>
     <c:forEach var="item" items="${bucket.items}">
         <tr>
@@ -24,9 +25,15 @@ Items in Your Bucket:
                 <c:out value="${item.price}"/>
             </td>
 
+            <td>
+                <a href="/Internet_Shop_war_exploded/deleteItemFromBucket?item_id=${item.id}">DELETE</a>
+            </td>
+
         </tr>
     </c:forEach>
 </table>
-
+<br>
+<a href="/Internet_Shop_war_exploded/currentOrder">Complete Order</a>
+</br>
 </body>
 </html>
