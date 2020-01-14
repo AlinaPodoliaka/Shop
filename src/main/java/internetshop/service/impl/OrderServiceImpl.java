@@ -11,7 +11,7 @@ import internetshop.model.User;
 import internetshop.service.OrderService;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,15 +28,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> get(Long id) {
+    public Order get(Long id) {
 
-        return orderDao.get(id);
+        return orderDao.get(id)
+                .orElseThrow(() -> new NoSuchElementException("Can't find order with id " + id));
     }
 
     @Override
-    public Optional<Order> update(Order order) {
+    public Order update(Order order) {
 
-        return orderDao.update(order);
+        return orderDao.update(order)
+                .orElseThrow(() -> new NoSuchElementException("Can't find order"));
     }
 
     @Override

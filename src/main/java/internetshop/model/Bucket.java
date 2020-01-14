@@ -17,6 +17,10 @@ public class Bucket {
         items = new ArrayList<>();
     }
 
+    public Bucket() {
+        id = idGenerator++;
+    }
+
     public Long getId() {
 
         return id;

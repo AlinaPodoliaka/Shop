@@ -1,16 +1,28 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: AP
-  Date: 1/8/2020
-  Time: 11:24 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Index</title>
+    <title>
+        Index
+    </title>
 </head>
 <body>
-Hello World
+<br>
+<a href="/Internet_Shop_war_exploded/addItem">Add Item</a>
+</br>
+<br>
+<a href="/Internet_Shop_war_exploded/registration">Registration</a>
+</br>
+<br>
+<a href="/Internet_Shop_war_exploded/getAllUsers">All users</a>
+</br>
+<br>
+<a href="/Internet_Shop_war_exploded/getAllItems">All items</a>
+</br>
+<br>
+<a href="/Internet_Shop_war_exploded/bucket">Bucket</a>
+</br>
+<br>
+<a href="/Internet_Shop_war_exploded/allUsersOrders">All Users Orders</a>
+</br>
 </body>
 </html>
