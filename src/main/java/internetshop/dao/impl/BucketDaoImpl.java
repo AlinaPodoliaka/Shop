@@ -8,7 +8,7 @@ import internetshop.model.Bucket;
 import java.util.Optional;
 
 @Dao
-public class BucketDaoImpl implements BucketDao {
+public class  BucketDaoImpl implements BucketDao {
     @Override
     public Bucket create(Bucket bucket) {
 

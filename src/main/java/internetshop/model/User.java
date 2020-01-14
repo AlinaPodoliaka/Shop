@@ -7,6 +7,7 @@ public class User {
     private String surname;
     private String login;
     private String password;
+    private String token;
     private Long id;
 
     public User(String name) {
@@ -61,4 +62,11 @@ public class User {
         this.password = password;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

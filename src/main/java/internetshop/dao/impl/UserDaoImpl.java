@@ -2,10 +2,10 @@ package internetshop.dao.impl;
 
 import internetshop.dao.Storage;
 import internetshop.dao.UserDao;
+import internetshop.exceptions.AuthentificationException;
 import internetshop.lib.Dao;
 import internetshop.model.User;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Dao
@@ -21,11 +21,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> get(Long id) {
 
-        return Optional.ofNullable(Storage.users
+        return Storage.users
                 .stream()
                 .filter(user -> user.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id)));
+                .findFirst();
     }
 
     @Override
@@ -41,5 +40,31 @@ public class UserDaoImpl implements UserDao {
     public void delete(Long id) {
 
         Storage.users.removeIf(u -> u.getId().equals(id));
+    }
+
+    @Override
+    public User login(String login, String password)
+            throws AuthentificationException {
+        Optional<User> user = Storage.users.stream()
+                .filter(u -> u.getLogin().equals(login))
+                .findFirst();
+        if (user.isEmpty() || !user.get().getPassword().equals(password)) {
+            throw new AuthentificationException("Incorrect username or password");
+        }
+        return user.get();
+    }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        return Storage.users.stream()
+                .filter(u -> u.getLogin().equals(login))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<User> findByToken(String token) {
+        return Storage.users.stream()
+                .filter(u -> u.getToken().equals(token))
+                .findFirst();
     }
 }
