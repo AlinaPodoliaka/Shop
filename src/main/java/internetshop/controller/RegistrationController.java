@@ -34,9 +34,9 @@ public class RegistrationController extends HttpServlet {
         User user = userService.create(newUser);
 
         HttpSession session = req.getSession(true);
-        session.setAttribute("userId",user.getId());
+        session.setAttribute("userId", user.getId());
 
-        Cookie cookie = new Cookie("MATE",user.getToken());
+        Cookie cookie = new Cookie("MATE", user.getToken());
         resp.addCookie(cookie);
         resp.sendRedirect(req.getContextPath() + "/index");
 

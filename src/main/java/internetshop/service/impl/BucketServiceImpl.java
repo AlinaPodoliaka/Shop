@@ -21,9 +21,7 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void addItem(Long bucketId, Long itemId) {
-        Bucket newBucket = bucketDao.get(bucketId)
-                .orElseThrow(() -> new NoSuchElementException("Can't find bucket with id "
-                        + bucketId));
+        Bucket newBucket = get(bucketId);
         Item newItem = itemDao.get(itemId)
                 .orElseThrow(() -> new NoSuchElementException("Can't find item with id " + itemId));
         newBucket.getItems().add(newItem);
@@ -63,11 +61,11 @@ public class BucketServiceImpl implements BucketService {
     @Override
     public void deleteItem(Bucket bucket, Item item) {
 
-        Bucket bucket1 = bucketDao.get(bucket.getId())
+        Bucket delBucket = bucketDao.get(bucket.getId())
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket"));
-        List<Item> itemsInBucket = bucket1.getItems();
+        List<Item> itemsInBucket = delBucket.getItems();
         itemsInBucket.remove(item);
-        bucketDao.update(bucket1);
+        bucketDao.update(delBucket);
     }
 
     @Override

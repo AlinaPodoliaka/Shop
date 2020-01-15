@@ -2,7 +2,6 @@ package internetshop.dao.impl;
 
 import internetshop.dao.Storage;
 import internetshop.dao.UserDao;
-import internetshop.exceptions.AuthentificationException;
 import internetshop.lib.Dao;
 import internetshop.model.User;
 
@@ -40,18 +39,6 @@ public class UserDaoImpl implements UserDao {
     public void delete(Long id) {
 
         Storage.users.removeIf(u -> u.getId().equals(id));
-    }
-
-    @Override
-    public User login(String login, String password)
-            throws AuthentificationException {
-        Optional<User> user = Storage.users.stream()
-                .filter(u -> u.getLogin().equals(login))
-                .findFirst();
-        if (user.isEmpty() || !user.get().getPassword().equals(password)) {
-            throw new AuthentificationException("Incorrect username or password");
-        }
-        return user.get();
     }
 
     @Override

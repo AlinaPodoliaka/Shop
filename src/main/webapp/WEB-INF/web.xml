@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>bucket</servlet-name>
-        <servlet-class>internetshop.controller.CreateBucketController</servlet-class>
+        <servlet-class>internetshop.controller.BucketController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>bucket</servlet-name>
