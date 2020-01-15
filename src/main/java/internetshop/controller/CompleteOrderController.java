@@ -39,7 +39,7 @@ public class CompleteOrderController extends HttpServlet {
         req.setAttribute("items", itemsInOrder);
         req.setAttribute("order_id", order.getId());
 
-        req.getRequestDispatcher("WEB-INF/views/currentOrder.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/currentOrder.jsp").forward(req, resp);
 
     }
 }

@@ -38,7 +38,7 @@ public class RegistrationController extends HttpServlet {
 
         Cookie cookie = new Cookie("MATE", user.getToken());
         resp.addCookie(cookie);
-        resp.sendRedirect(req.getContextPath() + "/index");
+        resp.sendRedirect(req.getContextPath() + "/servlet/index");
 
     }
 }

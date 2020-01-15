@@ -14,7 +14,7 @@ All orders:
                 <c:out value="${order.id}"/>
             </td>
             <td>
-                <a href="deleteOrder?order_id=${order.id}">Delete</a>
+                <a href="/Internet_Shop_war_exploded/servlet/deleteOrder?order_id=${order.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>

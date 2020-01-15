@@ -28,7 +28,7 @@ Items:
             </td>
 
             <td>
-                <a href="/Internet_Shop_war_exploded/addItemToBucket?item_id=${item.id}">ADD</a>
+                <a href="/Internet_Shop_war_exploded/servlet/addItemToBucket?item_id=${item.id}">ADD</a>
             </td>
 
 

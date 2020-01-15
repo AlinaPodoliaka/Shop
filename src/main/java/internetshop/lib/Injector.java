@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class Injector {
+
+    private static Logger logger = Logger.getLogger(Injector.class);
 
     private static final String PROJECT_MAIN_PACKAGE = "internetshop";
     private static List<Class> classes = new ArrayList<>();
@@ -17,7 +21,7 @@ public class Injector {
         try {
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            logger.error("Sorry, something wrong!");
         }
     }
 
