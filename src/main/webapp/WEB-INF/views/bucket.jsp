@@ -26,14 +26,14 @@ Items in Your Bucket:
             </td>
 
             <td>
-                <a href="/Internet_Shop_war_exploded/deleteItemFromBucket?item_id=${item.id}">DELETE</a>
+                <a href="/Internet_Shop_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}">DELETE</a>
             </td>
 
         </tr>
     </c:forEach>
 </table>
 <br>
-<a href="/Internet_Shop_war_exploded/currentOrder">Complete Order</a>
+<a href="${pageContext.request.contextPath}/servlet/currentOrder">Complete Order</a>
 </br>
 </body>
 </html>

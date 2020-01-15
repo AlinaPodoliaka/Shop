@@ -9,7 +9,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/servlet/index</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -18,7 +18,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>getAllItems</servlet-name>
-        <url-pattern>/getAllItems</url-pattern>
+        <url-pattern>/servlet/getAllItems</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -27,7 +27,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>getAllUsers</servlet-name>
-        <url-pattern>/getAllUsers</url-pattern>
+        <url-pattern>/servlet/getAllUsers</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -36,7 +36,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteUser</servlet-name>
-        <url-pattern>/deleteUser</url-pattern>
+        <url-pattern>/servlet/deleteUser</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -45,7 +45,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteItemFromBucket</servlet-name>
-        <url-pattern>/deleteItemFromBucket</url-pattern>
+        <url-pattern>/servlet/deleteItemFromBucket</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -54,7 +54,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>completeOrder</servlet-name>
-        <url-pattern>/completeOrder</url-pattern>
+        <url-pattern>/servlet/completeOrder</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -72,7 +72,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>addItem</servlet-name>
-        <url-pattern>/addItem</url-pattern>
+        <url-pattern>/servlet/addItem</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -81,7 +81,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>bucket</servlet-name>
-        <url-pattern>/bucket</url-pattern>
+        <url-pattern>/servlet/bucket</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -90,7 +90,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>currentOrder</servlet-name>
-        <url-pattern>/currentOrder</url-pattern>
+        <url-pattern>/servlet/currentOrder</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -99,7 +99,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>addItemToBucket</servlet-name>
-        <url-pattern>/addItemToBucket</url-pattern>
+        <url-pattern>/servlet/addItemToBucket</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -108,7 +108,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>allUsersOrders</servlet-name>
-        <url-pattern>/allUsersOrders</url-pattern>
+        <url-pattern>/servlet/allUsersOrders</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -117,7 +117,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteOrder</servlet-name>
-        <url-pattern>/deleteOrder</url-pattern>
+        <url-pattern>/servlet/deleteOrder</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -135,11 +135,7 @@
     </filter>
     <filter-mapping>
         <filter-name>auth-filter</filter-name>
-        <url-pattern>/getAllUsers</url-pattern>
-        <url-pattern>/getAllItems</url-pattern>
-        <url-pattern>/allUsersOrders</url-pattern>
-        <url-pattern>/index</url-pattern>
-        <url-pattern>/bucket</url-pattern>
+        <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
 
     <listener>

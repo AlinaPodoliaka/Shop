@@ -6,7 +6,6 @@ import internetshop.service.UserService;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,8 +17,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class AuthentificationFilter implements Filter {
-    private static Logger logger = Logger.getLogger(String.valueOf(AuthentificationFilter.class));
+
+    private static Logger logger = Logger.getLogger(AuthentificationFilter.class);
 
     @Inject
     private static UserService userService;

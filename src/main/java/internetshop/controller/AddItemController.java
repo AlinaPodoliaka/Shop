@@ -30,7 +30,7 @@ public class AddItemController extends HttpServlet {
 
         itemService.create(newItem);
 
-        resp.sendRedirect(req.getContextPath() + "/getAllItems");
+        resp.sendRedirect(req.getContextPath() + "/servlet/getAllItems");
 
     }
 }
