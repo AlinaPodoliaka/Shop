@@ -13,4 +13,8 @@ public interface UserDao {
     Optional<User> update(User user);
 
     void delete(Long id);
+
+    Optional<User> findByLogin(String login);
+
+    Optional<User> findByToken(String token);
 }
