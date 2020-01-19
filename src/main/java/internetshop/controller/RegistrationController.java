@@ -1,10 +1,12 @@
 package internetshop.controller;
 
 import internetshop.lib.Inject;
+import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.UserService;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -31,6 +33,7 @@ public class RegistrationController extends HttpServlet {
         newUser.setPassword(req.getParameter("psw"));
         newUser.setName(req.getParameter("user_name"));
         newUser.setSurname(req.getParameter("user_surname"));
+        newUser.setRoles(Collections.singleton(Role.of("USER")));
         User user = userService.create(newUser);
 
         HttpSession session = req.getSession(true);
