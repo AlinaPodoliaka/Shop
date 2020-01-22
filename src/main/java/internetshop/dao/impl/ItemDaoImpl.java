@@ -5,6 +5,7 @@ import internetshop.dao.Storage;
 import internetshop.lib.Dao;
 import internetshop.model.Item;
 
+import java.util.List;
 import java.util.Optional;
 
 @Dao
@@ -46,5 +47,10 @@ public class ItemDaoImpl implements ItemDao {
     public void delete(Item item) {
 
         Storage.items.removeIf(i -> i.equals(item));
+    }
+
+    @Override
+    public List<Item> getAllItems() {
+        return Storage.items;
     }
 }

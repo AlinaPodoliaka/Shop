@@ -1,7 +1,6 @@
 package internetshop.service.impl;
 
 import internetshop.dao.ItemDao;
-import internetshop.dao.Storage;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.Item;
@@ -9,6 +8,7 @@ import internetshop.service.ItemService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -22,10 +22,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item get(Long id) {
+    public Optional<Item> get(Long id) {
 
-        return itemDao.get(id)
-                .orElseThrow(() -> new NoSuchElementException("Can't find item with id " + id));
+        return itemDao.get(id);
     }
 
     @Override
@@ -50,6 +49,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getAllItems() {
 
-        return Storage.items;
+        return itemDao.getAllItems();
     }
 }
