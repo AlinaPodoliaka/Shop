@@ -5,9 +5,9 @@ import internetshop.dao.ItemDao;
 import internetshop.dao.OrderDao;
 import internetshop.dao.UserDao;
 import internetshop.dao.impl.BucketDaoImpl;
-import internetshop.dao.impl.ItemDaoImpl;
 import internetshop.dao.impl.OrderDaoImpl;
 import internetshop.dao.impl.UserDaoImpl;
+import internetshop.dao.impl.jdbc.ItemDaoJdbcImpl;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
 import internetshop.service.OrderService;
@@ -17,7 +17,26 @@ import internetshop.service.impl.ItemServiceImpl;
 import internetshop.service.impl.OrderServiceImpl;
 import internetshop.service.impl.UserServiceImpl;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
+
 public class Factory {
+
+    private static Logger logger = Logger.getLogger(Factory.class);
+    private static Connection connection;
+
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+                    + "user=root&password=Al55221133&serverTimezone=UTC");
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error("Can't establish connection to our DB", e);
+        }
+    }
 
     private static UserDao userDaoInstance;
     private static UserService userServiceInstance;
@@ -47,7 +66,7 @@ public class Factory {
 
     public static ItemDao getItemDao() {
         if (itemDaoInstance == null) {
-            itemDaoInstance = new ItemDaoImpl();
+            itemDaoInstance = new ItemDaoJdbcImpl(connection);
         }
         return itemDaoInstance;
     }
