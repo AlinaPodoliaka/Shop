@@ -3,6 +3,7 @@ package internetshop.web.filters;
 import static internetshop.model.Role.RoleName.ADMIN;
 import static internetshop.model.Role.RoleName.USER;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
@@ -23,7 +24,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class AuthorizationFilter implements Filter {
+
+    private static Logger logger = Logger.getLogger(AuthorizationFilter.class);
+
     public static final String EMPTY_STRING = "";
     @Inject
     private static UserService userService;
@@ -69,18 +75,24 @@ public class AuthorizationFilter implements Filter {
             processUnAuthentificated(req, resp);
             return;
         } else {
-            Optional<User> user = userService.getByToken(token);
-            if (user.isPresent()) {
-                if (verifyRole(user.get(), roleName)) {
-                    processAuthentificated(chain, req, resp);
-                    return;
-                } else {
-                    processDenied(req, resp);
-                    return;
+            Optional<User> user = null;
+            try {
+                user = userService.getByToken(token);
+                if (user.isPresent()) {
+                    if (verifyRole(user.get(), roleName)) {
+                        processAuthentificated(chain, req, resp);
+                        return;
+                    } else {
+                        processDenied(req, resp);
+                        return;
+                    }
                 }
+                processUnAuthentificated(req, resp);
+                return;
+            } catch (DataProcessingException e) {
+                logger.error(e);
             }
-            processUnAuthentificated(req, resp);
-            return;
+
         }
     }
 

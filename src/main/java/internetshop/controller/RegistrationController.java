@@ -1,5 +1,6 @@
 package internetshop.controller;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
@@ -15,7 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 public class RegistrationController extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(RegistrationController.class);
+
     @Inject
     private static UserService userService;
 
@@ -34,14 +40,21 @@ public class RegistrationController extends HttpServlet {
         newUser.setName(req.getParameter("user_name"));
         newUser.setSurname(req.getParameter("user_surname"));
         newUser.setRoles(Collections.singleton(Role.of("USER")));
-        User user = userService.create(newUser);
+        User user = null;
+        try {
+            user = userService.create(newUser);
+            HttpSession session = req.getSession(true);
+            session.setAttribute("userId", user.getId());
 
-        HttpSession session = req.getSession(true);
-        session.setAttribute("userId", user.getId());
+            Cookie cookie = new Cookie("MATE", user.getToken());
+            resp.addCookie(cookie);
 
-        Cookie cookie = new Cookie("MATE", user.getToken());
-        resp.addCookie(cookie);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.setAttribute("msg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+
+        }
         resp.sendRedirect(req.getContextPath() + "/servlet/index");
-
     }
 }

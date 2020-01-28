@@ -1,5 +1,6 @@
 package internetshop.web.filters;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.User;
 import internetshop.service.UserService;
@@ -36,17 +37,22 @@ public class AuthentificationFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        Long userId = (Long) req.getSession().getAttribute("user_id");
         if (req.getCookies() == null) {
             processUnAuthentificated(req, response);
             return;
         }
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals("MATE")) {
-                Optional<User> user = userService.getByToken(cookie.getValue());
-                if (user.isPresent()) {
-                    logger.info("User " + user.get().getLogin() + " was authenticated");
-                    chain.doFilter(servletRequest, servletResponse);
-                    return;
+                try {
+                    Optional<User> user = userService.getByToken(cookie.getValue());
+                    if (user.isPresent()) {
+                        logger.info("User " + user.get().getLogin() + " was authenticated");
+                        chain.doFilter(servletRequest, servletResponse);
+                        return;
+                    }
+                } catch (DataProcessingException e) {
+                    logger.error(e);
                 }
             }
         }

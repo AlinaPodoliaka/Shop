@@ -1,5 +1,6 @@
 package internetshop.controller;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.Item;
 import internetshop.service.ItemService;
@@ -11,7 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class AddItemController extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(AddItemController.class);
+
     @Inject
     private static ItemService itemService;
 
@@ -28,7 +34,13 @@ public class AddItemController extends HttpServlet {
         newItem.setName(req.getParameter("item_name"));
         newItem.setPrice(Double.valueOf(req.getParameter("item_price")));
 
-        itemService.create(newItem);
+        try {
+            itemService.create(newItem);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.setAttribute("msg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
 
         resp.sendRedirect(req.getContextPath() + "/servlet/getAllItems");
 

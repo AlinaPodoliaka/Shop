@@ -1,6 +1,7 @@
 package internetshop.controller;
 
 import internetshop.exceptions.AuthentificationException;
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.User;
 import internetshop.service.UserService;
@@ -39,7 +40,7 @@ public class LoginController extends HttpServlet {
             resp.addCookie(cookie);
             resp.sendRedirect(req.getContextPath() + "/servlet/index");
 
-        } catch (AuthentificationException e) {
+        } catch (AuthentificationException | DataProcessingException e) {
             req.setAttribute("errorMsg", "Incorrect login or password");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
 

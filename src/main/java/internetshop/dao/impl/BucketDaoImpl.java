@@ -5,6 +5,7 @@ import internetshop.dao.Storage;
 import internetshop.lib.Dao;
 import internetshop.model.Bucket;
 
+import java.util.List;
 import java.util.Optional;
 
 @Dao
@@ -38,5 +39,15 @@ public class  BucketDaoImpl implements BucketDao {
     public void delete(Long id) {
 
         Storage.buckets.removeIf(bucket -> bucket.getId().equals(id));
+    }
+
+    @Override
+    public List<Bucket> getAll() {
+        return null;
+    }
+
+    @Override
+    public void addItem(Long bucketId, Long itemId) {
+
     }
 }
