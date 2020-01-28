@@ -17,12 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
-
 @Dao
 public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao {
-
-    private static Logger logger = Logger.getLogger(BucketDaoJdbcImpl.class);
 
     @Inject
     private static ItemDao itemDao;
@@ -133,6 +129,8 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
 
     @Override
     public void delete(Long id) throws DataProcessingException {
+        Bucket delBucket = get(id).get();
+        deleteItems(delBucket, delBucket.getItems());
         String query = "DELETE FROM buckets WHERE bucket_id = ?;";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, id);

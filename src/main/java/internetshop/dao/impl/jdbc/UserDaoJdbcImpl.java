@@ -16,12 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
-
-    private static Logger logger = Logger.getLogger(UserDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);

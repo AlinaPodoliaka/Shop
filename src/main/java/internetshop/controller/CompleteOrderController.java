@@ -46,6 +46,7 @@ public class CompleteOrderController extends HttpServlet {
 
         } catch (DataProcessingException e) {
             logger.error(e);
+            req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
 

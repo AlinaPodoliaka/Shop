@@ -30,6 +30,7 @@ public class BucketController extends HttpServlet {
             req.setAttribute("bucket", bucket);
         } catch (DataProcessingException e) {
             logger.error(e);
+            req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
         req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);

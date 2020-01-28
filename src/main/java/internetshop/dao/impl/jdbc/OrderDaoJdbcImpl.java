@@ -19,12 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
-
 @Dao
 public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
-
-    private static Logger logger = Logger.getLogger(OrderDaoJdbcImpl.class);
 
     @Inject
     private static UserDao userDao;
