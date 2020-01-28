@@ -5,6 +5,7 @@ import internetshop.dao.UserDao;
 import internetshop.lib.Dao;
 import internetshop.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 @Dao
@@ -54,4 +55,10 @@ public class UserDaoImpl implements UserDao {
                 .filter(u -> u.getToken().equals(token))
                 .findFirst();
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return Storage.users;
+    }
+
 }

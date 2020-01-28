@@ -1,5 +1,6 @@
 package internetshop.controller;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
@@ -12,7 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class InjectDataController extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(InjectDataController.class);
+
     @Inject
     private static UserService userService;
 
@@ -25,7 +31,12 @@ public class InjectDataController extends HttpServlet {
         user.addRole(Role.of("USER"));
         user.setLogin("wind");
         user.setPassword("1");
-        userService.create(user);
+        try {
+            userService.create(user);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
 
         User admin = new User();
         admin.setName("Ret");
@@ -33,7 +44,11 @@ public class InjectDataController extends HttpServlet {
         admin.addRole(Role.of("ADMIN"));
         admin.setLogin("bad_guy");
         admin.setPassword("2");
-        userService.create(admin);
+        try {
+            userService.create(admin);
+        } catch (DataProcessingException e) {
+            e.printStackTrace();
+        }
 
         resp.sendRedirect(req.getContextPath() + "/servlet/index");
 

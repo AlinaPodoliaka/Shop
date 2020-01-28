@@ -1,5 +1,6 @@
 package internetshop.controller;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.service.UserService;
 
@@ -10,7 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class DeleteUserController extends HttpServlet {
+    private static Logger logger = Logger.getLogger(DeleteUserController.class);
+
     @Inject
     private static UserService userService;
 
@@ -19,7 +24,12 @@ public class DeleteUserController extends HttpServlet {
             throws ServletException, IOException {
 
         String userId = req.getParameter("user_id");
-        userService.delete(Long.valueOf(userId));
+        try {
+            userService.delete(Long.valueOf(userId));
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
 
         resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
 

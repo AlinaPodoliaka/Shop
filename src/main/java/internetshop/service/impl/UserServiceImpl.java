@@ -1,8 +1,8 @@
 package internetshop.service.impl;
 
-import internetshop.dao.Storage;
 import internetshop.dao.UserDao;
 import internetshop.exceptions.AuthentificationException;
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.User;
@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private static UserDao userDao;
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws DataProcessingException {
         user.setToken(getToken());
         return userDao.create(user);
     }
@@ -30,33 +30,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(Long id) {
+    public User get(Long id) throws DataProcessingException {
 
         return userDao.get(id)
                 .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id));
     }
 
     @Override
-    public User update(User user) {
+    public User update(User user) throws DataProcessingException {
 
         return userDao.update(user)
                 .orElseThrow(() -> new NoSuchElementException("Can't find user"));
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
 
         userDao.delete(id);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return Storage.users;
+    public List<User> getAllUsers() throws DataProcessingException {
+        return userDao.getAllUsers();
     }
 
     @Override
     public User login(String login, String password)
-            throws AuthentificationException {
+            throws AuthentificationException, DataProcessingException {
         User user = userDao.findByLogin(login)
                 .orElseThrow(() -> new AuthentificationException("Incorrect username or password"));
         if (!user.getPassword().equals(password)) {
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getByToken(String token) {
+    public Optional<User> getByToken(String token) throws DataProcessingException {
         return userDao.findByToken(token);
     }
 }

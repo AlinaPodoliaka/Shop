@@ -1,6 +1,7 @@
 package internetshop.service.impl;
 
 import internetshop.dao.ItemDao;
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.Item;
@@ -16,38 +17,38 @@ public class ItemServiceImpl implements ItemService {
     private static ItemDao itemDao;
 
     @Override
-    public Item create(Item item) {
+    public Item create(Item item) throws DataProcessingException {
 
         return itemDao.create(item);
     }
 
     @Override
-    public Optional<Item> get(Long id) {
+    public Optional<Item> get(Long id) throws DataProcessingException {
 
         return itemDao.get(id);
     }
 
     @Override
-    public Item update(Item item) {
+    public Item update(Item item) throws DataProcessingException {
 
         return itemDao.update(item)
                 .orElseThrow(() -> new NoSuchElementException("Can't find item"));
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
 
         itemDao.delete(id);
     }
 
     @Override
-    public void delete(Item item) {
+    public void delete(Item item) throws DataProcessingException {
 
         itemDao.delete(item);
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAllItems() throws DataProcessingException {
 
         return itemDao.getAllItems();
     }

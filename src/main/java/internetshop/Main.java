@@ -1,5 +1,6 @@
 package internetshop;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.lib.Injector;
 import internetshop.model.Bucket;
@@ -32,7 +33,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DataProcessingException {
 
         User userTest = userService.create(new User("UserTest"));
 

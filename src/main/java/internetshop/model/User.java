@@ -1,6 +1,7 @@
 package internetshop.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class User {
@@ -84,5 +85,28 @@ public class User {
 
     public void addRole(Role role) {
         roles.add(role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return name.equals(user.name)
+                && surname.equals(user.surname)
+                && login.equals(user.login)
+                && password.equals(user.password)
+                && token.equals(user.token)
+                && id.equals(user.id)
+                && roles.equals(user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, login, password, token, id, roles);
     }
 }

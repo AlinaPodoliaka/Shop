@@ -1,6 +1,7 @@
 package internetshop.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
 
@@ -13,6 +14,17 @@ public class Order {
         this.userId = userId;
         this.items = items;
         id = idGenerator++;
+    }
+
+    public Order(Long id, Long userId, List<Item> items) {
+        this.id = id;
+        this.userId = userId;
+        this.items = items;
+    }
+
+    public Order(Long orderId, List<Item> items) {
+        this.id = orderId;
+        this.items = items;
     }
 
     public Long getUserId() {
@@ -39,5 +51,24 @@ public class Order {
     public String toString() {
 
         return "Order{" + "id=" + id + ", userId=" + userId + ", items=" + items + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Order)) {
+            return false;
+        }
+        Order order = (Order) o;
+        return id.equals(order.id)
+                && userId.equals(order.userId)
+                && items.equals(order.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, items);
     }
 }
