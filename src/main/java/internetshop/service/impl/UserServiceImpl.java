@@ -7,6 +7,7 @@ import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.User;
 import internetshop.service.UserService;
+import internetshop.util.HashUtil;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws DataProcessingException {
+        byte[] salt = HashUtil.getSalt();
+        user.setPassword(HashUtil.hashPassword(user.getPassword(), salt));
+        user.setSalt(salt);
         user.setToken(getToken());
         return userDao.create(user);
     }
@@ -38,7 +42,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws DataProcessingException {
-
+        byte[] salt = HashUtil.getSalt();
+        String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
+        user.setPassword(hashPassword);
+        user.setSalt(salt);
         return userDao.update(user)
                 .orElseThrow(() -> new NoSuchElementException("Can't find user"));
     }
@@ -57,12 +64,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String login, String password)
             throws AuthentificationException, DataProcessingException {
-        User user = userDao.findByLogin(login)
-                .orElseThrow(() -> new AuthentificationException("Incorrect username or password"));
-        if (!user.getPassword().equals(password)) {
+        Optional<User> user = userDao.findByLogin(login);
+        if (user.isEmpty() || !user.get().getPassword()
+                .equals(HashUtil.hashPassword(password, user.get().getSalt()))) {
             throw new AuthentificationException("Incorrect username or password");
         }
-        return user;
+        return user.get();
     }
 
     @Override

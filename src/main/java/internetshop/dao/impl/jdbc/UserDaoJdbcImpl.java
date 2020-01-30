@@ -26,8 +26,8 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     @Override
     public User create(User user) throws DataProcessingException {
         Long userId = null;
-        String query = "INSERT INTO users (name, surname, login, password,token)"
-                + " VALUES (?, ?, ?,?,?);";
+        String query = "INSERT INTO users (name, surname, login, password,token, salt)"
+                + " VALUES (?, ?, ?,?,?,?);";
         try (PreparedStatement stmt
                      = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getName());
@@ -35,6 +35,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             stmt.setString(3, user.getLogin());
             stmt.setString(4, user.getPassword());
             stmt.setString(5, user.getToken());
+            stmt.setBytes(6, user.getSalt());
             stmt.executeUpdate();
             ResultSet resultSet = stmt.getGeneratedKeys();
             while (resultSet.next()) {
@@ -67,14 +68,15 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> update(User user) throws DataProcessingException {
         String query = "UPDATE users SET name = ?, surname = ?, login = ?,"
-                + " password = ?, token= ? WHERE user_id = ?;";
+                + " password = ?, token= ?,salt = ? WHERE user_id = ?;";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getSurname());
             stmt.setString(3, user.getLogin());
             stmt.setString(4, user.getPassword());
             stmt.setString(5, user.getToken());
-            stmt.setLong(5, user.getId());
+            stmt.setBytes(6, user.getSalt());
+            stmt.setLong(7, user.getId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -158,6 +160,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         user.setLogin(rs.getString("login"));
         user.setPassword(rs.getString("password"));
         user.setToken(rs.getString("token"));
+        user.setSalt(rs.getBytes("salt"));
 
         return user;
     }
