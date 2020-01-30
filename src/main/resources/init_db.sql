@@ -141,6 +141,9 @@ CREATE TABLE `test`.`bucket_items` (
         ON DELETE NO ACTION
         ON UPDATE NO ACTION);
 
+    ALTER TABLE `test`.`users`
+      ADD COLUMN `salt` VARBINARY(256) NOT NULL ;
+
 
 
 
