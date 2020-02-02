@@ -24,37 +24,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order create(Order order) throws DataProcessingException {
-
         return orderDao.create(order);
     }
 
     @Override
     public Order get(Long id) throws DataProcessingException {
-
         return orderDao.get(id)
                 .orElseThrow(() -> new NoSuchElementException("Can't find order with id " + id));
     }
 
     @Override
     public Order update(Order order) throws DataProcessingException {
-
         return orderDao.update(order)
                 .orElseThrow(() -> new NoSuchElementException("Can't find order"));
     }
 
     @Override
     public void delete(Long id) throws DataProcessingException {
-
         orderDao.delete(id);
     }
 
     @Override
     public Order completeOrder(List<Item> items, User user) throws DataProcessingException {
-
         Order order = new Order(items, user.getId());
         order.setItems(items);
         orderDao.create(order);
-
         return order;
     }
 

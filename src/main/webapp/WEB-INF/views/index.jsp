@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>
-        Index
+        Main page
     </title>
 </head>
 <body>

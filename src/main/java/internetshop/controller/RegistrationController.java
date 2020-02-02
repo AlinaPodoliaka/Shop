@@ -40,9 +40,8 @@ public class RegistrationController extends HttpServlet {
         newUser.setName(req.getParameter("user_name"));
         newUser.setSurname(req.getParameter("user_surname"));
         newUser.setRoles(Collections.singleton(Role.of("USER")));
-        User user = null;
         try {
-            user = userService.create(newUser);
+            User user = userService.create(newUser);
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", user.getId());
 

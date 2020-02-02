@@ -31,13 +31,11 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public Bucket create(Bucket bucket) throws DataProcessingException {
-
         return bucketDao.create(bucket);
     }
 
     @Override
     public Bucket get(Long id) throws DataProcessingException {
-
         return bucketDao.get(id)
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket with id " + id));
     }
@@ -56,14 +54,12 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public Bucket update(Bucket bucket) throws DataProcessingException {
-
         return bucketDao.update(bucket)
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket"));
     }
 
     @Override
     public void deleteItem(Bucket bucket, Item item) throws DataProcessingException {
-
         Bucket delBucket = bucketDao.get(bucket.getId())
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket"));
         List<Item> itemsInBucket = delBucket.getItems();
@@ -73,13 +69,11 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void clear(Bucket bucket) throws DataProcessingException {
-
         bucketDao.delete(bucket.getId());
     }
 
     @Override
     public List<Item> getAllItems(Bucket bucket) throws DataProcessingException {
-
         return bucketDao.get(bucket.getId())
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket")).getItems();
     }

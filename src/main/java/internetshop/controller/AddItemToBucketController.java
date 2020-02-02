@@ -30,8 +30,7 @@ public class AddItemToBucketController extends HttpServlet {
             throws ServletException, IOException {
         try {
             Long userId = (Long) req.getSession().getAttribute("userId");
-            Bucket bucket = null;
-            bucket = bucketService.getByUserId(userId);
+            Bucket bucket = bucketService.getByUserId(userId);
             String itemId = req.getParameter("item_id");
             bucketService.addItem(bucket.getId(), Long.valueOf(itemId));
         } catch (DataProcessingException e) {

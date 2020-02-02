@@ -25,7 +25,6 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User create(User user) throws DataProcessingException {
-        Long userId = null;
         String query = "INSERT INTO users (name, surname, login, password,token, salt)"
                 + " VALUES (?, ?, ?,?,?,?);";
         try (PreparedStatement stmt
@@ -39,7 +38,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             stmt.executeUpdate();
             ResultSet resultSet = stmt.getGeneratedKeys();
             while (resultSet.next()) {
-                userId = resultSet.getLong(1);
+                Long userId = resultSet.getLong(1);
                 user.setId(userId);
             }
             addRole(user, user.getRoles());

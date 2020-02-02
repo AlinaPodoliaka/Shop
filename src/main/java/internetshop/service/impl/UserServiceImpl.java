@@ -22,10 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws DataProcessingException {
-        byte[] salt = HashUtil.getSalt();
-        user.setPassword(HashUtil.hashPassword(user.getPassword(), salt));
-        user.setSalt(salt);
         user.setToken(getToken());
+        user.setSalt(HashUtil.getSalt());
+        user.setPassword(HashUtil.hashPassword(user.getPassword(), user.getSalt()));
         return userDao.create(user);
     }
 
@@ -42,12 +41,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws DataProcessingException {
-        byte[] salt = HashUtil.getSalt();
-        String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
-        user.setPassword(hashPassword);
-        user.setSalt(salt);
         return userDao.update(user)
-                .orElseThrow(() -> new NoSuchElementException("Can't find user"));
+                .orElseThrow(() -> new NoSuchElementException("Can't update user"));
     }
 
     @Override

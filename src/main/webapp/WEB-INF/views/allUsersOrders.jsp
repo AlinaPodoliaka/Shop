@@ -3,7 +3,7 @@
 <jsp:useBean id="orders" scope="request" type="java.util.List<internetshop.model.Order>"/>
 <html>
 <head>
-    <title>All Users Orders</title>
+    <title>All Your Orders</title>
 </head>
 <body>
 All orders:
