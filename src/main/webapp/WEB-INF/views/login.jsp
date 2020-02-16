@@ -6,7 +6,7 @@
 <body>
 Login page
 <div>${errorMsg}</div>
-<form action="/Internet_Shop_war_exploded/login" method="post">
+<form action="${pageContext.request.contextPath}/login" method="post">
     <div class="container">
         <h1>Login</h1>
         <p>Please fill in this form to sing into account.</p>

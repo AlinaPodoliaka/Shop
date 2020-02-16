@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 public class DeleteOrderController extends HttpServlet {
-    private static Logger logger = Logger.getLogger(DeleteOrderController.class);
+    private static final Logger LOGGER = Logger.getLogger(DeleteOrderController.class);
 
     @Inject
     private static OrderService orderService;
@@ -23,9 +23,9 @@ public class DeleteOrderController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            orderService.delete(Long.valueOf(req.getParameter("order_id")));
+            orderService.deleteById(Long.valueOf(req.getParameter("order_id")));
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
 

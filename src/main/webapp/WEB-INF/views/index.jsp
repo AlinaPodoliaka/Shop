@@ -7,22 +7,22 @@
 </head>
 <body>
 <br>
-<a href="/Internet_Shop_war_exploded/servlet/addItem">Add Item</a>
+<a href="${pageContext.request.contextPath}/servlet/addItem">Add Item</a>
 </br>
 <br>
-<a href="/Internet_Shop_war_exploded/registration">Registration</a>
+<a href="${pageContext.request.contextPath}/registration">Registration</a>
 </br>
 <br>
-<a href="/Internet_Shop_war_exploded/servlet/getAllUsers">All users</a>
+<a href="${pageContext.request.contextPath}/servlet/getAllUsers">All users</a>
 </br>
 <br>
-<a href="/Internet_Shop_war_exploded/servlet/getAllItems">All items</a>
+<a href="${pageContext.request.contextPath}/servlet/getAllItems">All items</a>
 </br>
 <br>
-<a href="/Internet_Shop_war_exploded/servlet/bucket">Bucket</a>
+<a href="${pageContext.request.contextPath}/servlet/bucket">Bucket</a>
 </br>
 <br>
-<a href="/Internet_Shop_war_exploded/servlet/allUsersOrders">All Users Orders</a>
+<a href="${pageContext.request.contextPath}/servlet/allUsersOrders">All Users Orders</a>
 </br>
 </body>
 </html>

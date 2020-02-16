@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 public class DeleteUserController extends HttpServlet {
-    private static Logger logger = Logger.getLogger(DeleteUserController.class);
+    private static final Logger LOGGER = Logger.getLogger(DeleteUserController.class);
 
     @Inject
     private static UserService userService;
@@ -25,9 +25,9 @@ public class DeleteUserController extends HttpServlet {
 
         String userId = req.getParameter("user_id");
         try {
-            userService.delete(Long.valueOf(userId));
+            userService.deleteById(Long.valueOf(userId));
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }

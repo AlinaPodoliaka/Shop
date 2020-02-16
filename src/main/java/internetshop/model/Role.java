@@ -1,17 +1,20 @@
 package internetshop.model;
 
+import internetshop.dao.IdGenerator;
+
+import java.util.Objects;
+
 public class Role {
-    private static Long idGenerator = 0L;
     private Long id;
     private RoleName roleName;
 
-    public Role() {
-        id = idGenerator++;
+    private Role(RoleName roleName) {
+        this.roleName = roleName;
+        this.setId(IdGenerator.getRoleId());
     }
 
-    public Role(RoleName roleName) {
-        this();
-        this.roleName = roleName;
+    public Role(String roleName) {
+        this.roleName = RoleName.valueOf(roleName);
     }
 
     public Long getId() {
@@ -36,5 +39,23 @@ public class Role {
 
     public enum RoleName {
         USER, ADMIN;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Role role = (Role) o;
+        return Objects.equals(id, role.id)
+                && roleName == role.roleName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roleName);
     }
 }

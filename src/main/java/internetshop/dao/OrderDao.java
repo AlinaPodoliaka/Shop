@@ -2,15 +2,10 @@ package internetshop.dao;
 
 import internetshop.exceptions.DataProcessingException;
 import internetshop.model.Order;
-import java.util.Optional;
+import internetshop.model.User;
 
-public interface OrderDao {
+import java.util.List;
 
-    Order create(Order order) throws DataProcessingException;
-
-    Optional<Order> get(Long id) throws DataProcessingException;
-
-    Optional<Order> update(Order order) throws DataProcessingException;
-
-    void delete(Long id) throws DataProcessingException;
+public interface OrderDao extends GenericDao<Order, Long> {
+    List<Order> getUserOrders(User user) throws DataProcessingException;
 }

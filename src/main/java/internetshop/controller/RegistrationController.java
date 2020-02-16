@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Collections;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +19,7 @@ import org.apache.log4j.Logger;
 
 public class RegistrationController extends HttpServlet {
 
-    private static Logger logger = Logger.getLogger(RegistrationController.class);
-
+    private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
     @Inject
     private static UserService userService;
 
@@ -34,25 +32,22 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User newUser = new User();
-        newUser.setLogin(req.getParameter("login"));
+
+        User newUser = new User(req.getParameter("login"));
+        newUser.setFirstName(req.getParameter("user_name"));
+        newUser.setSecondName(req.getParameter("user_surname"));
         newUser.setPassword(req.getParameter("psw"));
-        newUser.setName(req.getParameter("user_name"));
-        newUser.setSurname(req.getParameter("user_surname"));
-        newUser.setRoles(Collections.singleton(Role.of("USER")));
+        newUser.addRoles(Collections.singleton(Role.of("USER")));
+
         try {
             User user = userService.create(newUser);
+
             HttpSession session = req.getSession(true);
-            session.setAttribute("userId", user.getId());
-
-            Cookie cookie = new Cookie("MATE", user.getToken());
-            resp.addCookie(cookie);
-
+            session.setAttribute("user_id", user.getId());
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
-
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/index");
     }

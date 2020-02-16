@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 public class GetAllUsersController extends HttpServlet {
-    private static Logger logger = Logger.getLogger(GetAllUsersOrdersController.class);
+    private static final Logger LOGGER = Logger.getLogger(GetAllUsersOrdersController.class);
     @Inject
     private static UserService userService;
 
@@ -26,14 +26,14 @@ public class GetAllUsersController extends HttpServlet {
             throws ServletException, IOException {
         List<User> users = new ArrayList<>();
         try {
-            users = userService.getAllUsers();
+            users = userService.getAll();
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
         req.setAttribute("users", users);
-        req.getRequestDispatcher("/WEB-INF/views/allUsers.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/servlet/getAllUsers.jsp").forward(req, resp);
 
     }
 }
