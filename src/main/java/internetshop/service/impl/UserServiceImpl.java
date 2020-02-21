@@ -1,7 +1,7 @@
 package internetshop.service.impl;
 
 import internetshop.dao.UserDao;
-import internetshop.exceptions.AuthentificationException;
+import internetshop.exceptions.AuthenticationException;
 import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) throws DataProcessingException {
         byte[] salt = HashUtil.getSalt();
-        user.setPassword(HashUtil.hashPassword(user.getPassword(), salt));
+        String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
+        user.setPassword(hashPassword);
         user.setSalt(salt);
-        user.setToken(getToken());
         return userDao.create(user);
     }
 
@@ -35,45 +35,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Long id) throws DataProcessingException {
-
         return userDao.get(id)
-                .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id));
+                .orElseThrow(() -> new NoSuchElementException("Can't get user with id "));
     }
 
     @Override
     public User update(User user) throws DataProcessingException {
-        byte[] salt = HashUtil.getSalt();
-        String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
-        user.setPassword(hashPassword);
-        user.setSalt(salt);
-        return userDao.update(user)
-                .orElseThrow(() -> new NoSuchElementException("Can't find user"));
+        return userDao.update(user);
     }
 
     @Override
-    public void delete(Long id) throws DataProcessingException {
-
-        userDao.delete(id);
+    public void deleteById(Long entityId) throws DataProcessingException {
+        userDao.deleteById(entityId);
     }
 
     @Override
-    public List<User> getAllUsers() throws DataProcessingException {
-        return userDao.getAllUsers();
+    public void delete(User entity) throws DataProcessingException {
+        userDao.deleteById(entity.getId());
+    }
+
+    @Override
+    public List<User> getAll() throws DataProcessingException {
+        return userDao.getAll();
     }
 
     @Override
     public User login(String login, String password)
-            throws AuthentificationException, DataProcessingException {
-        Optional<User> user = userDao.findByLogin(login);
+            throws AuthenticationException, DataProcessingException {
+        Optional<User> user = userDao.findByUsername(login);
         if (user.isEmpty() || !user.get().getPassword()
                 .equals(HashUtil.hashPassword(password, user.get().getSalt()))) {
-            throw new AuthentificationException("Incorrect username or password");
+            throw new AuthenticationException("Incorrect login or password");
         }
         return user.get();
     }
 
-    @Override
-    public Optional<User> getByToken(String token) throws DataProcessingException {
-        return userDao.findByToken(token);
-    }
 }

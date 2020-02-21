@@ -4,10 +4,10 @@ import internetshop.dao.BucketDao;
 import internetshop.dao.ItemDao;
 import internetshop.dao.OrderDao;
 import internetshop.dao.UserDao;
-import internetshop.dao.impl.jdbc.BucketDaoJdbcImpl;
-import internetshop.dao.impl.jdbc.ItemDaoJdbcImpl;
-import internetshop.dao.impl.jdbc.OrderDaoJdbcImpl;
-import internetshop.dao.impl.jdbc.UserDaoJdbcImpl;
+import internetshop.dao.jdbc.BucketDaoJdbcImpl;
+import internetshop.dao.jdbc.ItemDaoJdbcImpl;
+import internetshop.dao.jdbc.OrderDaoJdbcImpl;
+import internetshop.dao.jdbc.UserDaoJdbcImpl;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
 import internetshop.service.OrderService;
@@ -25,16 +25,16 @@ import org.apache.log4j.Logger;
 
 public class Factory {
 
-    private static Logger logger = Logger.getLogger(Factory.class);
+    private static final Logger LOGGER = Logger.getLogger(Factory.class);
     private static Connection connection;
 
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internetshop?"
                     + "user=root&password=Al55221133&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
-            logger.error("Can't establish connection to our DB", e);
+            LOGGER.error("Can't establish connection to our DB", e);
         }
     }
 

@@ -26,7 +26,7 @@ Items in Your Bucket:
             </td>
 
             <td>
-                <a href="/Internet_Shop_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteItemFromBucket?item_id=${item.id}">DELETE</a>
             </td>
 
         </tr>

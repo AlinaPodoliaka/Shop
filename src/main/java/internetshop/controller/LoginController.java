@@ -1,6 +1,6 @@
 package internetshop.controller;
 
-import internetshop.exceptions.AuthentificationException;
+import internetshop.exceptions.AuthenticationException;
 import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.User;
@@ -9,13 +9,16 @@ import internetshop.service.UserService;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 public class LoginController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
+
     @Inject
     private static UserService userService;
 
@@ -28,22 +31,23 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String login = req.getParameter("login");
+        String username = req.getParameter("login");
         String password = req.getParameter("psw");
         try {
-            User user = userService.login(login, password);
+            User user = userService.login(username, password);
 
             HttpSession session = req.getSession(true);
-            session.setAttribute("userId", user.getId());
+            session.setAttribute("user_id", user.getId());
 
-            Cookie cookie = new Cookie("MATE", user.getToken());
-            resp.addCookie(cookie);
             resp.sendRedirect(req.getContextPath() + "/servlet/index");
+        } catch (AuthenticationException e) {
+            req.setAttribute("errorMsg", e.getMessage());
 
-        } catch (AuthentificationException | DataProcessingException e) {
-            req.setAttribute("errorMsg", "Incorrect login or password");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
-
+        } catch (DataProcessingException e) {
+            LOGGER.error(e);
+            req.setAttribute("msg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
     }
 }

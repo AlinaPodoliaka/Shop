@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 
 public class GetAllUsersOrdersController extends HttpServlet {
 
-    private static Logger logger = Logger.getLogger(GetAllUsersOrdersController.class);
+    private static final Logger LOGGER = Logger.getLogger(GetAllUsersOrdersController.class);
 
     @Inject
     private static UserService userService;
@@ -30,18 +30,19 @@ public class GetAllUsersOrdersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Long userId = (Long) req.getSession(true).getAttribute("userId");
-        User user = null;
+
         try {
-            user = userService.get(userId);
+            Long userId = (Long) req.getSession(true).getAttribute("userId");
+            User user = userService.get(userId);
+            List<Order> usersOrders = orderService.getUserOrders(user);
+            req.setAttribute("orders", usersOrders);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
-        List<Order> usersOrders = orderService.getUserOrders(user);
-        req.setAttribute("orders", usersOrders);
-        req.getRequestDispatcher("/WEB-INF/views/allUsersOrders.jsp").forward(req, resp);
+
+        req.getRequestDispatcher("/WEB-INF/views/servlet/allUsersOrders.jsp").forward(req, resp);
 
     }
 }

@@ -5,25 +5,21 @@ import java.util.List;
 import java.util.Objects;
 
 public class Bucket {
-
-    private static Long idGenerator = 0L;
-
     private Long id;
     private List<Item> items;
     private Long userId;
 
-    public Bucket(Long userId) {
-        this.userId = userId;
-        id = idGenerator++;
+    public Bucket(User user) {
         items = new ArrayList<>();
+        userId = user.getId();
     }
 
-    public Bucket() {
-        id = idGenerator++;
+    public Bucket(Long userId) {
+        items = new ArrayList<>();
+        this.userId = userId;
     }
 
     public Long getId() {
-
         return id;
     }
 
@@ -32,23 +28,32 @@ public class Bucket {
     }
 
     public List<Item> getItems() {
-
         return items;
     }
 
-    public void setItems(List<Item> items) {
-
-        this.items = items;
-    }
-
     public Long getUserId() {
-
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void addItem(Item item) {
+        if (items.contains(item)) {
+            System.out.println(item.getName() + " already in bucket");
+            return;
+        }
+        items.add(item);
+    }
 
-        this.userId = userId;
+    public void addItems(List<Item> items) {
+        this.items.removeAll(items);
+        this.items.addAll(items);
+    }
+
+    public void deleteItem(Item item) {
+        items.remove(item);
+    }
+
+    public void clear() {
+        items.clear();
     }
 
     @Override
@@ -56,12 +61,12 @@ public class Bucket {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Bucket)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Bucket bucket = (Bucket) o;
-        return id.equals(bucket.id)
-                && items.equals(bucket.items)
+        return Objects.equals(id, bucket.id)
+                && Objects.equals(items, bucket.items)
                 && userId.equals(bucket.userId);
     }
 
@@ -70,4 +75,3 @@ public class Bucket {
         return Objects.hash(id, items, userId);
     }
 }
-

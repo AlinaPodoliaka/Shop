@@ -11,7 +11,6 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/servlet/index</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>getAllItems</servlet-name>
         <servlet-class>internetshop.controller.GetAllItemsController</servlet-class>
@@ -20,7 +19,6 @@
         <servlet-name>getAllItems</servlet-name>
         <url-pattern>/servlet/getAllItems</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>getAllUsers</servlet-name>
         <servlet-class>internetshop.controller.GetAllUsersController</servlet-class>
@@ -29,7 +27,6 @@
         <servlet-name>getAllUsers</servlet-name>
         <url-pattern>/servlet/getAllUsers</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>deleteUser</servlet-name>
         <servlet-class>internetshop.controller.DeleteUserController</servlet-class>
@@ -38,7 +35,6 @@
         <servlet-name>deleteUser</servlet-name>
         <url-pattern>/servlet/deleteUser</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>deleteItemFromBucket</servlet-name>
         <servlet-class>internetshop.controller.DeleteItemFromBucketController</servlet-class>
@@ -47,7 +43,6 @@
         <servlet-name>deleteItemFromBucket</servlet-name>
         <url-pattern>/servlet/deleteItemFromBucket</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>completeOrder</servlet-name>
         <servlet-class>internetshop.controller.CompleteOrderController</servlet-class>
@@ -56,7 +51,6 @@
         <servlet-name>completeOrder</servlet-name>
         <url-pattern>/servlet/completeOrder</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>registration</servlet-name>
         <servlet-class>internetshop.controller.RegistrationController</servlet-class>
@@ -65,7 +59,6 @@
         <servlet-name>registration</servlet-name>
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>addItem</servlet-name>
         <servlet-class>internetshop.controller.AddItemController</servlet-class>
@@ -74,7 +67,6 @@
         <servlet-name>addItem</servlet-name>
         <url-pattern>/servlet/addItem</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>bucket</servlet-name>
         <servlet-class>internetshop.controller.BucketController</servlet-class>
@@ -83,7 +75,6 @@
         <servlet-name>bucket</servlet-name>
         <url-pattern>/servlet/bucket</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>currentOrder</servlet-name>
         <servlet-class>internetshop.controller.CompleteOrderController</servlet-class>
@@ -92,7 +83,6 @@
         <servlet-name>currentOrder</servlet-name>
         <url-pattern>/servlet/currentOrder</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>addItemToBucket</servlet-name>
         <servlet-class>internetshop.controller.AddItemToBucketController</servlet-class>
@@ -101,7 +91,6 @@
         <servlet-name>addItemToBucket</servlet-name>
         <url-pattern>/servlet/addItemToBucket</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>allUsersOrders</servlet-name>
         <servlet-class>internetshop.controller.GetAllUsersOrdersController</servlet-class>
@@ -110,7 +99,6 @@
         <servlet-name>allUsersOrders</servlet-name>
         <url-pattern>/servlet/allUsersOrders</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>deleteOrder</servlet-name>
         <servlet-class>internetshop.controller.DeleteOrderController</servlet-class>
@@ -119,7 +107,6 @@
         <servlet-name>deleteOrder</servlet-name>
         <url-pattern>/servlet/deleteOrder</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>loginController</servlet-name>
         <servlet-class>internetshop.controller.LoginController</servlet-class>
@@ -128,7 +115,6 @@
         <servlet-name>loginController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>logoutController</servlet-name>
         <servlet-class>internetshop.controller.LogoutController</servlet-class>
@@ -137,7 +123,6 @@
         <servlet-name>logoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>injectDataController</servlet-name>
         <servlet-class>internetshop.controller.InjectDataController</servlet-class>
@@ -146,16 +131,14 @@
         <servlet-name>injectDataController</servlet-name>
         <url-pattern>/inject</url-pattern>
     </servlet-mapping>
-    
     <filter>
         <filter-name>auth-filter</filter-name>
-        <filter-class>internetshop.web.filters.AuthentificationFilter</filter-class>
+        <filter-class>internetshop.web.filters.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>auth-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
-
     <filter>
         <filter-name>authorization-filter</filter-name>
         <filter-class>internetshop.web.filters.AuthorizationFilter</filter-class>
@@ -164,7 +147,6 @@
         <filter-name>authorization-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
-
     <listener>
         <listener-class>internetshop.controller.InjectInitializer</listener-class>
     </listener>

@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 public class AddItemController extends HttpServlet {
 
-    private static Logger logger = Logger.getLogger(AddItemController.class);
+    private static final Logger LOGGER = Logger.getLogger(AddItemController.class);
 
     @Inject
     private static ItemService itemService;
@@ -30,14 +30,14 @@ public class AddItemController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Item newItem = new Item();
-        newItem.setName(req.getParameter("item_name"));
-        newItem.setPrice(Double.valueOf(req.getParameter("item_price")));
+
+        Item newItem = new Item(req.getParameter("item_name"),
+                Double.valueOf(req.getParameter("item_price")));
 
         try {
             itemService.create(newItem);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }

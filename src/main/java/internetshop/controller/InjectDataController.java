@@ -4,9 +4,12 @@ import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
+import internetshop.service.ItemService;
+import internetshop.service.OrderService;
 import internetshop.service.UserService;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +20,13 @@ import org.apache.log4j.Logger;
 
 public class InjectDataController extends HttpServlet {
 
-    private static Logger logger = Logger.getLogger(InjectDataController.class);
+    private static final Logger LOGGER = Logger.getLogger(InjectDataController.class);
+
+    @Inject
+    private static ItemService itemService;
+
+    @Inject
+    private static OrderService orderService;
 
     @Inject
     private static UserService userService;
@@ -25,34 +34,28 @@ public class InjectDataController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User user = new User();
-        user.setName("Scarlet");
-        user.setSurname("O'Hara");
-        user.addRole(Role.of("USER"));
-        user.setLogin("wind");
-        user.setPassword("1");
         try {
-            userService.create(user);
-        } catch (DataProcessingException e) {
-            logger.error(e);
-            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
-        }
 
-        User admin = new User();
-        admin.setName("Ret");
-        admin.setSurname("Butler");
-        admin.addRole(Role.of("ADMIN"));
-        admin.setLogin("bad_guy");
-        admin.setPassword("2");
-        try {
+            User user = new User("user");
+            user.setPassword("1");
+            user.setFirstName("Martin");
+            user.setSecondName("Fourcade");
+            user.addRoles(Collections.singleton(Role.of("USER")));
+            userService.create(user);
+
+            User admin = new User("admin");
+            admin.setPassword("2");
+            admin.setFirstName("Simon");
+            admin.setSecondName("Fourcade");
+            admin.addRoles(Collections.singleton(Role.of("ADMIN")));
             userService.create(admin);
+
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
 
-        resp.sendRedirect(req.getContextPath() + "/servlet/index");
-
+        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
 }

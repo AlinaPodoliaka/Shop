@@ -8,8 +8,6 @@ import internetshop.model.Item;
 import internetshop.service.ItemService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -18,38 +16,31 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item create(Item item) throws DataProcessingException {
-
         return itemDao.create(item);
     }
 
     @Override
-    public Optional<Item> get(Long id) throws DataProcessingException {
-
-        return itemDao.get(id);
+    public Item get(Long id) throws DataProcessingException {
+        return itemDao.get(id).orElseThrow();
     }
 
     @Override
     public Item update(Item item) throws DataProcessingException {
-
-        return itemDao.update(item)
-                .orElseThrow(() -> new NoSuchElementException("Can't find item"));
+        return itemDao.update(item);
     }
 
     @Override
-    public void delete(Long id) throws DataProcessingException {
+    public void deleteById(Long entityId) throws DataProcessingException {
+        itemDao.deleteById(entityId);
+    }
 
-        itemDao.delete(id);
+    @Override
+    public List<Item> getAll() throws DataProcessingException {
+        return itemDao.getAll();
     }
 
     @Override
     public void delete(Item item) throws DataProcessingException {
-
         itemDao.delete(item);
-    }
-
-    @Override
-    public List<Item> getAllItems() throws DataProcessingException {
-
-        return itemDao.getAllItems();
     }
 }

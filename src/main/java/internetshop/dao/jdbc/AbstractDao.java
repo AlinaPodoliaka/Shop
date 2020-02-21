@@ -1,4 +1,4 @@
-package internetshop.dao.impl.jdbc;
+package internetshop.dao.jdbc;
 
 import java.sql.Connection;
 

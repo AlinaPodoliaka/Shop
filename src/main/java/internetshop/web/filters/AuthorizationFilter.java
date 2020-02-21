@@ -12,7 +12,6 @@ import internetshop.service.UserService;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,7 +19,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,16 +26,16 @@ import org.apache.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
 
-    private static Logger logger = Logger.getLogger(AuthorizationFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(AuthorizationFilter.class);
 
-    public static final String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
     @Inject
     private static UserService userService;
 
     private Map<String, Role.RoleName> protectedUrls = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         protectedUrls.put("/servlet/getAllUsers", ADMIN);
         protectedUrls.put("/servlet/addItem", ADMIN);
         protectedUrls.put("/servlet/addItemToBucket", USER);
@@ -47,58 +45,40 @@ public class AuthorizationFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        Cookie[] cookies = req.getCookies();
-        if (cookies == null) {
-            processUnAuthentificated(req, resp);
-            return;
-        }
-
         String requestedUrl = req.getRequestURI().replace(req.getContextPath(), EMPTY_STRING);
         Role.RoleName roleName = protectedUrls.get(requestedUrl);
-        if (roleName == null) {
-            processAuthentificated(chain, req, resp);
-            return;
-        }
-        String token = null;
-        for (Cookie cookie : req.getCookies()) {
-            if (cookie.getName().equals("MATE")) {
-                token = cookie.getValue();
-                break;
-            }
-        }
-        if (token == null) {
-            processUnAuthentificated(req, resp);
-            return;
-        } else {
-            Optional<User> user = null;
-            try {
-                user = userService.getByToken(token);
-                if (user.isPresent()) {
-                    if (verifyRole(user.get(), roleName)) {
-                        processAuthentificated(chain, req, resp);
-                        return;
-                    } else {
-                        processDenied(req, resp);
-                        return;
-                    }
-                }
-                processUnAuthentificated(req, resp);
-                return;
-            } catch (DataProcessingException e) {
-                logger.error(e);
-            }
 
+        if (roleName == null) {
+            processAuthorized(req, resp, chain);
+            return;
+        }
+
+        Long userId = (Long) req.getSession().getAttribute("user_id");
+
+        try {
+            User user = userService.get(userId);
+
+            if (verifyRole(user, roleName)) {
+                processAuthorized(req, resp, chain);
+            } else {
+                processDenied(req, resp);
+            }
+        } catch (DataProcessingException e) {
+            LOGGER.error(e);
+            req.setAttribute("msg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
     }
 
-    private void processDenied(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/accessDenied.jsp").forward(req, resp);
+    @Override
+    public void destroy() {
+
     }
 
     private boolean verifyRole(User user, Role.RoleName roleName) {
@@ -107,19 +87,14 @@ public class AuthorizationFilter implements Filter {
                 .anyMatch(r -> r.getRoleName().equals(roleName));
     }
 
-    private void processAuthentificated(FilterChain chain, HttpServletRequest req,
-                                        HttpServletResponse resp)
+    private void processAuthorized(HttpServletRequest req, HttpServletResponse resp,
+                                   FilterChain chain)
             throws IOException, ServletException {
         chain.doFilter(req, resp);
     }
 
-    private void processUnAuthentificated(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        resp.sendRedirect(req.getContextPath() + "/login");
-    }
-
-    @Override
-    public void destroy() {
-
+    private void processDenied(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/views/accessDenied.jsp").forward(req, resp);
     }
 }
